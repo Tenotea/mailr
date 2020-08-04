@@ -1,0 +1,24 @@
+{
+  "name": "mailr-api",
+  "version": "1.0.0",
+  "description": "A web mailing app's api. This will be used with mailR",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tenotea/mailr.git"
+  },
+  "keywords": [
+    "api",
+    "typescript",
+    "node"
+  ],
+  "author": "Tenote",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tenotea/mailr/issues"
+  },
+  "homepage": "https://github.com/Tenotea/mailr#readme"
+}
