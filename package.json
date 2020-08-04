@@ -6,7 +6,7 @@
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
-    "postbuild": "pm2 stop dist/server.js",
+    "postbuild": "pm2 stop dist/server.js --name mailr-api",
     "prestart": "npm run build",
     "start": "pm2 start dist/server.js",
     "dev": "nodemon --watch src -e ts --exec npm run start"
