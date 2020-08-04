@@ -6,21 +6,21 @@ to any other in the world. Getting started. is extremely easy
 Head over to [MailR API](https://mailrapi.herokuapp.com) to view the docs or continue reading
 
 
-#### To use the API locally, clone the api with
+### To use the API locally, clone the api with
 ```bash
-    git clone https://github.com/Tenotea/mailr -b client
+    git clone https://github.com/Tenotea/mailr -b api
 ```
 
-###### Requirements
-  * pm2
+##### Requirements
+  * __pm2__
   ```javascript
       npm install -g pm2
   ```
-  * Typescript
+  * __Typescript__
   ```javascript
       npm install -g typescript
   ```
-  * Nodemon (optional)
+  * __Nodemon (optional)__
   ```javascript
       npm install -g nodemon
   ```
