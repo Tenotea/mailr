@@ -20,7 +20,7 @@ Head over to [MailR API](https://mailrapi.herokuapp.com) to view the docs or con
   ```javascript
       npm install -g typescript
   ```
-  * __Nodemon (optional)__
+  * __Nodemon__
   ```javascript
       npm install -g nodemon
   ```

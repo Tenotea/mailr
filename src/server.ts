@@ -1,9 +1,8 @@
-import express from 'express'
+import express, {Application} from 'express'
 import { routes } from './routes'
 
-const app:express.Application = express()
+const app:Application = express()
 const port = process.env.PORT || 8000
 
 routes(app)
-
 app.listen(port)
