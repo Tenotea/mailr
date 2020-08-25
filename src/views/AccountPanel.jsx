@@ -8,7 +8,7 @@ export function AccountPanel(props) {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-10 md:gap-5 lg:gap-10 px-6 pt-6 sm:pt-10 xl:pt-16">
           {
             ['a', 'b', 'c']
-            .map( card => <div className="bg-white rounded-md shadow-md w-full mx-auto h-64 z-10 xl:w-3/4">
+            .map( card => <div key={card} className="bg-white rounded-md shadow-md w-full mx-auto h-64 z-10 xl:w-3/4">
 
             </div>)
           }

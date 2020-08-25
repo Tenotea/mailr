@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import heroBanner from '../assets/images/heroBanner.png'
 import { CallToAction, CallToActionOutlined } from '../components/Button'
 import { HomeSection } from '../components/home/HomeSections'
@@ -6,9 +6,10 @@ import section01img from '../assets/images/section-01.png'
 import section02img from '../assets/images/section-02.png'
 import section03img from '../assets/images/section-03.png'
 import listIcon from '../assets/images/listicon.png'
+import { CurrentUserContext } from '../App'
 
 export function Home (props) {
-
+  const currentUser = useContext(CurrentUserContext)
   const features = ['Create contact groups','Create a virtual address book','Send messages in batches','Send recursive messages','Import existing contact list from a csv file']
   return (
     <div
@@ -36,7 +37,7 @@ export function Home (props) {
               <div
                 className="my-5 mr-8"
               >
-                <CallToAction route="/client-area"> Get started </CallToAction>
+                <CallToAction route={ currentUser ? '/accpanel' : '/client-area'}> { currentUser ? 'Dashboard' : 'Get Started'} </CallToAction>
               </div>
                 <CallToActionOutlined> Learn more </CallToActionOutlined>
             </div>

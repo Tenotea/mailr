@@ -17,7 +17,7 @@ export function CallToAction({route, children}){
 
 export function CallToActionOutlined({route, children}){
   return (
-    <Link to={route || '/'}>
+    <Link to={ route || '/'}>
       <button
         className="flex transition-colors duration-100 items-center justify-center border-white border-2 hover:bg-blue-100 hover:bg-opacity-25 rounded text-white px-6 py-2"
       >

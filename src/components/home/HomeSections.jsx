@@ -1,5 +1,6 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { CallToAction } from '../Button'
+import { CurrentUserContext } from '../../App'
 
 export function ComposedSectionImage({image}){
   return (
@@ -10,9 +11,10 @@ export function ComposedSectionImage({image}){
 }
 
 export function ComposedSectionText({ title, reverse, children }){
+  const currentUser = useContext(CurrentUserContext)
   return (
     <div className={`w-full lg:w-1/2 p-2 pl-5 ${reverse && 'md:pl-16' }`}>
-      <div className="relative px-5 py-3 my-5" style={{width: 'fit-content'}}>
+      <div className="relative px-5 py-2 my-5" style={{width: 'fit-content'}}>
         <span className="h-8 w-12 inline-block absolute right-0 top-0 bg-transparent border-4 border-proj-orangeCorners border-b-0 border-l-0"></span>
         <h1
           className="font-projTitle text-4xl"
@@ -26,7 +28,7 @@ export function ComposedSectionText({ title, reverse, children }){
          { children }
       </div>
 
-      <CallToAction route="/client-area"> Get Started </CallToAction>
+      <CallToAction route={ currentUser ? '/accpanel' : '/client-area'}> { currentUser ? 'Dashboard' : 'Get Started'} </CallToAction>
     </div>
   )
 }

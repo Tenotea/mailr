@@ -3,10 +3,11 @@ import { navItems } from './Header'
 import { CallToAction } from '../Button'
 import { Link } from 'react-router-dom'
 
-export function SideNav({ closeAction }){
+export function SideNav({ closeAction, currentUser }){
   return (
     <div
-      className="min-h-screen bg-white w-64 fixed z-20 right-0 sm:hidden"
+      className="min-h-screen bg-white w-64 fixed z-20 right-0 sm:hidden animate__animated animate__slideInRight"
+      style={{animationTimingFunction:'ease-in-out', animationDuration: '200ms', boxShadow: '5px 0px 10px #00000026'}}
     >
       <div className="p-3 ml-48 cursor-pointer" onClick={() => closeAction() }>
         <i className="material-icons text-4xl text-proj-buttonBlue"> cancel </i>
@@ -24,7 +25,7 @@ export function SideNav({ closeAction }){
       </ul>
 
       <div className="px-6 mt-8">
-        <CallToAction route="/client-area"> Get Started </CallToAction>
+        <CallToAction route={ currentUser ? '/accpanel/mail' : '/client-area'}> { currentUser ? 'Send Mail' : 'Get Started'} </CallToAction>
       </div>
     </div>
   )

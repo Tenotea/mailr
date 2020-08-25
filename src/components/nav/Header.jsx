@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { CallToAction } from '../Button'
 import { SideNav } from './SideNav'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AccountNav, NavAvatar } from './AccountNav'
-import section02 from '../../assets/images/section-02.png'
+import { CurrentUserContext  } from '../../App'
 
 export const navItems = [
   {
@@ -41,11 +41,13 @@ export function SiteLogo(){
 
 function Header(props){
   const [sideNav, setSideNav] = useState(false)
-  let location = useLocation();
   let toggleSideNav = () => setSideNav(!sideNav)
 
   const [accountNav, setAccountNav] = useState(false)
   let toggleAccountNav = () => setAccountNav(!accountNav)
+
+  const currentUser = useContext(CurrentUserContext)
+
   return (
     <>
     <header
@@ -53,8 +55,8 @@ function Header(props){
       style={{maxWidth: '2000px', minWidth: 250}}
     >
       <div className="flex items-center">
-        { location.pathname.includes('/accpanel')  &&
-          <NavAvatar onClick={ toggleAccountNav } size="40" src={section02}> </NavAvatar>
+        { currentUser &&
+          <NavAvatar onClick={ toggleAccountNav } size="40" src={currentUser.profilePhoto} pointer> </NavAvatar>
         }
         <span className="px-3"></span>
         {/* Customized site name */}
@@ -78,8 +80,8 @@ function Header(props){
             </li>
           )}
         </ul>
-          <CallToAction route="/client-area">
-            <span> Get started </span>
+          <CallToAction route={ currentUser ? '/accpanel/mail' : '/client-area'}>
+            <span> { currentUser ? 'Send Mail' : 'Get Started'} </span>
           </CallToAction>
       </div>
 
@@ -92,7 +94,7 @@ function Header(props){
     </header>
 
     {/* Side nav  */}
-    { sideNav && <SideNav closeAction={toggleSideNav}></SideNav> }
+    { sideNav && <SideNav closeAction={toggleSideNav} currentUser={currentUser}></SideNav> }
     { accountNav && <AccountNav toggle={toggleAccountNav} open={accountNav}></AccountNav>}
     </>
   )
