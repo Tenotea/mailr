@@ -1,10 +1,13 @@
+import { compareSync } from "bcryptjs";
 import { Response } from "express";
-import { sign } from 'jsonwebtoken'
+import { sign, verify } from 'jsonwebtoken'
+import passport from "passport";
 
- const createCookie = (res:Response, payload:string) => {
+const createCookie = (res:Response, payload:string) => {
   res.cookie('user', payload, {
     httpOnly: true,
     // sameSite: "none",
+    // secure: true
     expires: new Date(Date.now() + 3600000),
     path: '/',
     signed: true,
@@ -12,10 +15,24 @@ import { sign } from 'jsonwebtoken'
 }
 
 const createToken = (userid:object):string => {
-  const token = sign(userid, process.env.JWT_SCERET_KEY+'', {
+  const token = sign(userid, process.env.JWT_SECRET_KEY+'', {
     expiresIn: 3600000,
   })
   return token
 }
 
-export { createCookie, createToken }
+const verifyToken = (token:string) => {
+  let user
+  try {
+    user = verify(token, process.env.JWT_SECRET_KEY+'')
+  } catch (err) {
+    user = err
+  }
+  return user
+}
+
+const passwordMatches = (fromUser:string, fromDb:string):boolean => {
+  return compareSync(fromUser, fromDb)
+}
+
+export { createCookie, createToken, verifyToken, passwordMatches }

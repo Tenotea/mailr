@@ -1,12 +1,13 @@
-import { Router, Request, Response } from 'express'
+import { Router, Request, Response, NextFunction } from 'express'
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { User } from '../mongoose'
 import { createToken, createCookie} from '../controllers/userCredentialHandlers'
-import dotenv from 'dotenv'
-dotenv.config();
+import { verifyUser } from '../controllers/middlewares'
+import { UserSkeleton } from '../controllers/skeletons'
 
-export const OAuth = Router()
+const OAuth = Router()
+const clientRedirectURL = 'http://localhost:3000'
 
 // Configure passport
 passport.initialize()
@@ -24,18 +25,7 @@ passport.use(
       if(currentUser){
         return done(undefined, createToken({userid: currentUser._id}))
       } else {
-        const user  = {
-          googleid: profile.id,
-          firstname: profile._json.family_name,
-          lastname: profile._json.given_name,
-          displayName: profile.displayName,
-          email: profile._json.email,
-          profilePhoto: profile._json.picture,
-          oauth: true,
-          verified: true,
-          numberOfMails: 0,
-          timeCreated: Date.now()
-        }
+        const user = new UserSkeleton(profile.displayName, profile._json.email, null, profile._json.picture, profile.id, true)
         User.create(user).then( newUser => {
           return done(undefined, createToken({userid: newUser._id}))
         })
@@ -48,11 +38,16 @@ passport.serializeUser((user, done) => {
   done(null, user)
 })
 
-OAuth.get('/', passport.authenticate('google'))
+OAuth.get('/', verifyUser, function name(req:Request, res:Response, next:NextFunction) {
+  req.user ? res.redirect(`${clientRedirectURL}/accpanel`) : next()
+}, passport.authenticate('google'))
 
 OAuth.get('/redirect', passport.authenticate('google', {
-  failureRedirect: 'http://localhost:3000/client-area'
+  failureRedirect: `${clientRedirectURL}/client-area`
 }), (req:Request, res:Response) => {
   createCookie(res, req.user+'')
-  res.send('redirecting...')
+  res.send('One moment...')
+  res.redirect(`${clientRedirectURL}/accpanel`)
 })
+
+export default OAuth
