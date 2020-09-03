@@ -1,10 +1,12 @@
 import { Router, Request, Response, json } from 'express'
-import { User } from '../mongoose'
+import { User, Token } from '../mongoose'
 import { verifyUser } from '../controllers/middlewares'
 import { FormSignUpJoiValidate } from '../controllers/validator'
 import { responseUserSkeleton, UserSkeleton } from '../controllers/skeletons'
-import { createCookie, createToken } from '../controllers/userCredentialHandlers'
+import { createCookie, createToken, verificationLinkGenerate } from '../controllers/userCredentialHandlers'
 import { ErrorResponse } from '../response'
+import sendVerificationMail from '../controllers/verificationMailer'
+
 
 const SignUp = Router()
 const jsonParser = json({strict: true})
@@ -31,11 +33,24 @@ SignUp.post('/', jsonParser, verifyUser, (req:Request, res:Response) => {
           user.hashPassword()
           User.create(user)
           .then( newUser => {
-            const token = createToken({userid: newUser._id})
-            createCookie(res, token)
-            res.send(responseUserSkeleton(newUser))
+            const verificationLink = verificationLinkGenerate(newUser._id)
+            Token.create({
+              userid: newUser._id,
+              token: verificationLink.token
+            }).then( () => {
+              sendVerificationMail(newUser.toObject(), verificationLink.link)
+              .then( () => {
+                const jwtToken = createToken({userid: newUser._id})
+                createCookie(res, jwtToken)
+                res.send(responseUserSkeleton(newUser.toObject()))
+              }, () => {
+                res.send(new ErrorResponse(false, 'Error sending verification mail', 'alert'))
+              })
+            }, ()=> {
+              res.send(new ErrorResponse(false, 'Could not complete account creation',  'alert'))
+            })
           }, () => {
-            res.send(new ErrorResponse(false, 'Could not create the account', 'alert'))
+            res.send(new ErrorResponse(false, 'Failed to set up account', 'alert'))
           })
         }
       }, () => {

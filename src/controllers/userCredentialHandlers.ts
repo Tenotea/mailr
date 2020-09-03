@@ -1,7 +1,8 @@
 import { compareSync } from "bcryptjs";
 import { Response } from "express";
 import { sign, verify } from 'jsonwebtoken'
-import passport from "passport";
+import crypto from 'crypto'
+import { MailTokenInterface } from "./interface";
 
 const createCookie = (res:Response, payload:string) => {
   res.cookie('user', payload, {
@@ -35,4 +36,12 @@ const passwordMatches = (fromUser:string, fromDb:string):boolean => {
   return compareSync(fromUser, fromDb)
 }
 
-export { createCookie, createToken, verifyToken, passwordMatches }
+const verificationLinkGenerate = (userid:string):MailTokenInterface => {
+  const token = crypto.randomBytes(20).toString('hex')
+  return {
+    link: `http://localhost:3000/verify/${userid}/${token}`,
+    token
+  }
+}
+
+export { createCookie, createToken, verifyToken, passwordMatches, verificationLinkGenerate }

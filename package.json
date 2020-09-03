@@ -35,6 +35,7 @@
     "@types/joi": "^14.3.4",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.36",
+    "@types/nodemailer": "^6.4.0",
     "@types/passport": "^1.0.4",
     "@types/passport-google-oauth": "^1.0.41",
     "@types/passport-google-oauth20": "^2.0.3",
@@ -45,7 +46,8 @@
     "express": "^4.17.1",
     "joi": "^17.2.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.0",
+    "mongoose": "^5.10.2",
+    "nodemailer": "^6.4.11",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "typescript": "^3.9.7"

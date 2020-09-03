@@ -26,7 +26,8 @@ const verifyUser = (req:Request, res:Response, next:NextFunction) => {
             next()
           }
         }, () => {
-          res.send(new ErrorResponse(false, 'Could not verify user\'s status', 'alert'))
+          req.user = false
+          res.send(new ErrorResponse(false, 'Could not verify user\'s status', 'alert and try again'))
         })
       } else {
         req.user = false

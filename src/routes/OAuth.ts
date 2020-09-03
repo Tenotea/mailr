@@ -20,10 +20,14 @@ passport.use(
   },
 
   (accessToken, refreshToken, profile, done) => {
-    User.findOne({googleid: profile.id})
+    User.findOne({email: profile._json.email})
     .then( currentUser => {
       if(currentUser){
-        return done(undefined, createToken({userid: currentUser._id}))
+        if(currentUser.toObject().oauth && (currentUser.toObject().googleid === profile.id)){
+          return done(undefined, createToken({userid: currentUser._id}))
+        } else {
+          return done(undefined, false)
+        }
       } else {
         const user = new UserSkeleton(profile.displayName, profile._json.email, null, profile._json.picture, profile.id, true)
         User.create(user).then( newUser => {
@@ -34,20 +38,19 @@ passport.use(
   }
 ))
 
-passport.serializeUser((user, done) => {
-  done(null, user)
-})
-
-OAuth.get('/', verifyUser, function name(req:Request, res:Response, next:NextFunction) {
-  req.user ? res.redirect(`${clientRedirectURL}/accpanel`) : next()
-}, passport.authenticate('google'))
+OAuth.get('/', verifyUser,
+  (req:Request, res:Response, next:NextFunction) => {
+    req.user ? res.redirect(`${clientRedirectURL}/accpanel`) : next()
+  }, passport.authenticate('google', {session: false, failureFlash: true, failureRedirect: `${clientRedirectURL}/client-area`})
+)
 
 OAuth.get('/redirect', passport.authenticate('google', {
-  failureRedirect: `${clientRedirectURL}/client-area`
+  session: false,
+  failureFlash: true,
+  failureRedirect: `${clientRedirectURL}/client-area?error=This sign in method is not associated with this account!`
 }), (req:Request, res:Response) => {
-  createCookie(res, req.user+'')
-  res.send('One moment...')
-  res.redirect(`${clientRedirectURL}/accpanel`)
+      createCookie(res, req.user+'')
+      res.redirect(`${clientRedirectURL}/accpanel`)
 })
 
 export default OAuth

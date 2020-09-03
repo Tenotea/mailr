@@ -1,5 +1,5 @@
 import { hashSync } from "bcryptjs"
-import { object } from "joi"
+import { UserInterface } from './interface'
 
  export class UserSkeleton {
   private username:string
@@ -27,9 +27,17 @@ import { object } from "joi"
   public hashPassword():void{
     this.password = this.password ? hashSync(this.password, 10) : null
   }
+
+  public getUsername():string {
+    return this.username
+  }
+
+  public getEmail():string {
+    return this.username
+  }
 }
 
-export const responseUserSkeleton = (user:any) => {
+export const responseUserSkeleton = (user:UserInterface) => {
   return {
     username: user.username,
     email: user.email,
