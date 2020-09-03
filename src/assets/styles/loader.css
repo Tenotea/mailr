@@ -1,0 +1,130 @@
+@keyframes fold {
+  from{
+    transform: rotate(0deg);
+  }to{
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes moveC1 {
+  from{
+    transform: translate(-50%, -200%);
+  } to {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes moveC2 {
+  from{
+    transform: translate(-50%, -50%) scale(0.65);
+    box-shadow: 0px 0px 25px #fc3a76;
+  } to {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0px 0px 0px #fc3a76;
+  }
+}
+
+
+@keyframes moveC3 {
+  from{
+    transform: translate(-50%, 100%);
+  } to {
+    transform: translate(-50%, -50%);
+  }
+}
+
+#box-container{
+  animation-duration: .8s;
+  animation-direction: reverse;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-name: fold;
+  animation-timing-function: ease-in-out;
+}
+
+.box{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  background: #0774f5;
+  animation-duration: .8s;
+  animation-direction: alternate;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.c-1{
+  background: #0084db;
+  animation-name: moveC1;
+}
+.c-2{
+  background: #fc3a76;
+  animation-name: moveC2;
+}
+.c-3{
+  background: #fbb040;
+  animation-name: moveC3;
+}
+
+/* Status animations */
+.status-svg-circle {
+  animation: draw 1s ease-in-out 0s 1 forwards;
+}
+
+.status-svg-tick {
+  animation: drawTick 2.3s ease-in-out 0s 1 forwards;
+}
+
+@keyframes draw {
+  from{
+    stroke-dasharray: 600px;
+    stroke-dashoffset: 600px;
+  } to {
+    stroke-dasharray: 1700px;
+    stroke-dashoffset: 0px;
+  }
+}
+
+@keyframes drawTick {
+  from{
+    stroke-dasharray: 600px;
+    stroke-dashoffset: 600px;
+  } to {
+    stroke-dasharray: 1200px;
+    stroke-dashoffset: 0px;
+  }
+}
+
+.status-svg-cancel-stroke-1{
+  animation: rotateCancel1 .5s ease-in-out 0s 1 forwards;
+}
+
+.status-svg-cancel-stroke-2{
+  animation: rotateCancel2 .5s ease-in-out 0s 1 forwards;
+}
+
+@keyframes rotateCancel1 {
+  from{
+    transform: rotate(40deg);
+  } to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes rotateCancel2 {
+  from{
+    transform: rotate(40deg) translateX(10px);
+  } to {
+    transform: rotate(0deg);
+  }
+}
+
+.status-svg-cancel-stroke-2{
+  transform: rotate(0deg);
+}

@@ -11,7 +11,7 @@ export function ComposedSectionImage({image}){
 }
 
 export function ComposedSectionText({ title, reverse, children }){
-  const currentUser = useContext(CurrentUserContext)
+  const {currentUser} = useContext(CurrentUserContext)
   return (
     <div className={`w-full lg:w-1/2 p-2 pl-5 ${reverse && 'md:pl-16' }`}>
       <div className="relative px-5 py-2 my-5" style={{width: 'fit-content'}}>

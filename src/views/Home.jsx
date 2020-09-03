@@ -9,8 +9,9 @@ import listIcon from '../assets/images/listicon.png'
 import { CurrentUserContext } from '../App'
 
 export function Home (props) {
-  const currentUser = useContext(CurrentUserContext)
+  const { currentUser } = useContext(CurrentUserContext)
   const features = ['Create contact groups','Create a virtual address book','Send messages in batches','Send recursive messages','Import existing contact list from a csv file']
+
   return (
     <div
       className="home relative"

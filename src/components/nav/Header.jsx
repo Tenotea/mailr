@@ -4,6 +4,7 @@ import { SideNav } from './SideNav'
 import { Link } from 'react-router-dom'
 import { AccountNav, NavAvatar } from './AccountNav'
 import { CurrentUserContext  } from '../../App'
+import { Overlay, AlertBoxBaseTheme } from '../Overlay'
 
 export const navItems = [
   {
@@ -46,7 +47,32 @@ function Header(props){
   const [accountNav, setAccountNav] = useState(false)
   let toggleAccountNav = () => setAccountNav(!accountNav)
 
-  const currentUser = useContext(CurrentUserContext)
+  const { currentUser, currentUserResponse, setAuthStatus } = useContext(CurrentUserContext)
+
+  let accountNavDecision = () => {
+    if( !currentUserResponse ){
+      return (
+        <div className="flex h-4 items-center justify-center w-4 relative">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-proj-orangeCorners opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-400"></span>
+        </div>
+      )
+    } else if (currentUserResponse.type === 'error' && currentUserResponse.action === 'alert and try again'){
+      return (
+        <Overlay position="fixed">
+          <AlertBoxBaseTheme message={currentUserResponse.msg} resetAction={() => {setAuthStatus(Math.random())}} />
+        </Overlay>
+      )
+    } else if (currentUserResponse.type === 'error' && currentUserResponse.action === 'ignore') {
+      return null
+    } else if(currentUserResponse === 'error') {
+      return null
+    } else if( currentUser && !currentUser.verified){
+      return <Link to="/activation"> <NavAvatar onClick={ null } size="40" src={currentUser.profilePhoto} username={currentUser.username} pointer background={currentUser.bgColor}> </NavAvatar> </Link>
+    } else {
+      return <NavAvatar onClick={ toggleAccountNav } size="40" src={currentUser.profilePhoto} username={currentUser.username} pointer background={currentUser.bgColor}> </NavAvatar>
+    }
+  }
 
   return (
     <>
@@ -55,9 +81,7 @@ function Header(props){
       style={{maxWidth: '2000px', minWidth: 250}}
     >
       <div className="flex items-center">
-        { currentUser &&
-          <NavAvatar onClick={ toggleAccountNav } size="40" src={currentUser.profilePhoto} pointer> </NavAvatar>
-        }
+        { accountNavDecision() }
         <span className="px-3"></span>
         {/* Customized site name */}
         <SiteLogo></SiteLogo>

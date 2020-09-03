@@ -4,7 +4,7 @@ import { FormButton } from '../Button'
 import { usernameCheck, emailCheck, passwordCheck } from './formChecks'
 
 
-export function SignUp({onSubmit}){
+export function SignUp({onSubmit, submitting }){
   const [ formData, setFormData ] = useState({
     username: null,
     email: null,
@@ -26,11 +26,10 @@ export function SignUp({onSubmit}){
   function submitForm(e){
     e.preventDefault()
     if(Object.values(formData).indexOf('') === -1){
-      console.log(formData)
-      onSubmit(true)
+      submitting(true)
+      onSubmit( formData, 'sign-up')
     } else {
-      console.log('Invalid form credentials')
-      onSubmit(false)
+      submitting(false)
     }
   }
 
@@ -38,10 +37,27 @@ export function SignUp({onSubmit}){
     <form
       className="p-6 md:p-10"
     >
-      <FormField name="username" label="Username" validate={usernameCheck} onUpdate={handleUpdate}> </FormField>
-      <FormField name="email" label="Email address" validate={emailCheck} onUpdate={handleUpdate}> </FormField>
-      <FormFieldPassword validate={passwordCheck} onUpdate={handleUpdate}></FormFieldPassword>
-      <FormButton submit={submitForm} > Sign up </FormButton>
+      <FormField
+        name="username"
+        label="Username"
+        validate={usernameCheck}
+        onUpdate={handleUpdate}
+      />
+      <FormField
+        name="email"
+        label="Email address"
+        validate={emailCheck}
+        onUpdate={handleUpdate}
+      />
+      <FormFieldPassword
+        validate={passwordCheck}
+        onUpdate={handleUpdate}
+      />
+      <FormButton
+        submit={submitForm}
+      >
+        Sign up
+      </FormButton>
     </form>
   )
 }

@@ -19,7 +19,7 @@ export function FormField ({name, label, validate, onUpdate}){
     <div
       className="flex flex-col font-projSans mb-6"
     >
-      <label htmlFor={name} className="text-proj-logoDarkBlue mb-2 text-base font-semibold"> {label} </label>
+      <label htmlFor={name} className="text-proj-logoDarkBlue mb-2 text-base font-semibold"> {label} <span className="text-sm text-proj-failed font-bold">*</span> </label>
       <input
         id={name}
         type={name}
@@ -59,7 +59,7 @@ export function FormFieldPassword ({validate, onUpdate}){
     <div
       className="flex flex-col font-projSans"
     >
-      <label htmlFor="password" className="text-proj-logoDarkBlue mb-2 text-base font-semibold"> Password </label>
+      <label htmlFor="password" className="text-proj-logoDarkBlue mb-2 text-base font-semibold"> Password <span className="text-sm text-proj-failed font-bold">*</span> </label>
       <div
         className="w-full relative"
       >

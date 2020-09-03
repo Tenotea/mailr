@@ -2,27 +2,42 @@ import React, {useState, useEffect} from 'react'
 import { Header } from './components/nav/Header'
 import { Home } from './views/Home'
 import { ClientArea } from './views/ClientArea'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import  Activation  from './views/Activation'
+import { Verification } from './views/Verify'
 import { AccountPanel } from './views/AccountPanel'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
 export const CurrentUserContext = React.createContext({})
 
 function CurrentUserContextProvider({children}){
   const [currentUser, setCurrentUser] = useState(undefined)
+  const [authStatus, setAuthStatus] = useState(false)
 
   useEffect(() => {
+    setCurrentUser(false)
+    fetchUser()
+  },[authStatus])
+
+  function fetchUser(){
     axios.get('http://localhost:8000/status/current-user', {withCredentials: true})
     .then( body => {
-      setCurrentUser(body.data.content)
-      console.log(body);
+      setCurrentUser(body.data)
     }, (error => {
+      setCurrentUser('error')
       console.log(error)
     }))
-  },[])
+  }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={
+      {
+        currentUser: currentUser && currentUser.content, 
+        currentUserResponse: currentUser, 
+        setAuthStatus, 
+        fetchUser
+      }
+    }>
       {children}
     </CurrentUserContext.Provider>
   )
@@ -40,6 +55,12 @@ function App(){
             </Route>
             <Route exact path="/client-area">
               <ClientArea></ClientArea>
+            </Route>
+            <Route path="/activation">
+              <Activation></Activation>
+            </Route>
+            <Route exact path="/verify/:userid/:token">
+              <Verification></Verification>
             </Route>
             <Route exact path="/accpanel">
               <AccountPanel></AccountPanel>

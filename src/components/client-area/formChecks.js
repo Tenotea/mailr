@@ -39,7 +39,7 @@ export const emailCheck = (v) => {
 
 export const passwordCheck = (v) => {
   let {error , success } = Object.create({error: null, success: false})
-  if((/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/).test(v)) {
+  if((/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,30}$/).test(v)) {
     if(v.length > 8 ){
       error = null
       success = true
