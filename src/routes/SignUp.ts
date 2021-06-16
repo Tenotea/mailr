@@ -10,7 +10,7 @@ import sendVerificationMail from '../controllers/verificationMailer'
 
 const SignUp = Router()
 const jsonParser = json({strict: true})
-const clientRedirectUrl = 'http://localhost:3000'
+const clientRedirectUrl = process.env.CLIENT_APP_URL
 
 // Sign up route
 SignUp.post('/', jsonParser, verifyUser, (req:Request, res:Response) => {
