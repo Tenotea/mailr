@@ -47,7 +47,7 @@
     "joi": "^17.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.2",
-    "nodemailer": "^6.4.11",
+    "nodemailer": "^6.4.16",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "typescript": "^3.9.7",
