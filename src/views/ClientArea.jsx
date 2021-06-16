@@ -3,13 +3,12 @@ import { SignUp } from '../components/client-area/Signup'
 import { SignIn } from '../components/client-area/Signin'
 import { Overlay, AlertBoxBaseTheme } from '../components/Overlay'
 import googleSignin from '../assets/images/google_signin.png'
-import axios from 'axios'
 import { Redirect, useLocation } from 'react-router-dom'
-import { CurrentUserContext } from '../App'
+import { CurrentUserContext, _globAxios } from '../App'
 import Loader from '../components/Loader'
 
 function directToOAuth () {
-  window.location.href = 'http://localhost:8000/oauth'
+  window.location.href = 'https://mailr-proto.herokuapp.com/oauth'
 }
 
 export function ClientArea (props){
@@ -27,12 +26,7 @@ export function ClientArea (props){
 
   // Api Call. Change in production
   const handleFormSubmit = (credentials, route) => {
-    axios.post(`http://localhost:8000/${route}`, credentials, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then( body => {
+    _globAxios.post(`/${route}`, credentials).then( body => {
       setSubmitting(false)
       if(body.data.type === 'error'){
         setSubmitError(body.data.msg)
