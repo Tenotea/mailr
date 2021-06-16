@@ -7,7 +7,7 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "pm2 start dist/server.js --no-daemon",
+    "start": "node dist/server.js",
     "dev": "nodemon --watch src -e ts --exec npm run start",
     "prod": "pm2 start dist/server.js"
   },
