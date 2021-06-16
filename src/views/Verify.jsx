@@ -2,8 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useParams, Redirect, Link } from 'react-router-dom'
 import Loader from '../components/Loader'
 import { AlertActionButton } from '../components/Overlay'
-import Axios from 'axios'
-import { CurrentUserContext } from '../App'
+import { CurrentUserContext, _globAxios } from '../App'
 
 export function VerificationStatusIconSuccess() {
   return (
@@ -90,7 +89,7 @@ export function VerificationStatusIconFailed() {
 function startVerfication(userid, token, setResponseFunction, setErrorFunction, setAuthStatus){
   setResponseFunction(null)
   setErrorFunction(null)
-  Axios.get(`http://localhost:8000/verify-email/${userid}/${token}`, {
+  _globAxios.get(`/verify-email/${userid}/${token}`, {
     withCredentials: true
   }).then(body => {
     setResponseFunction(body.data)
