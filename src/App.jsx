@@ -8,6 +8,10 @@ import { AccountPanel } from './views/AccountPanel'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
+export const _globAxios = axios.create({
+  baseURL: 'https://mair-proto.herokuapp.com/',
+  withCredentials: true
+})
 export const CurrentUserContext = React.createContext({})
 
 function CurrentUserContextProvider({children}){
@@ -20,7 +24,7 @@ function CurrentUserContextProvider({children}){
   },[authStatus])
 
   function fetchUser(){
-    axios.get('http://localhost:8000/status/current-user', {withCredentials: true})
+    _globAxios.get('/status/current-user')
     .then( body => {
       setCurrentUser(body.data)
     }, (error => {
