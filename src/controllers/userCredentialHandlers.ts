@@ -7,8 +7,8 @@ import { MailTokenInterface } from "./interface";
 const createCookie = (res:Response, payload:string) => {
   res.cookie('user', payload, {
     httpOnly: true,
-    // sameSite: "none",
-    // secure: true
+    sameSite: "none",
+    secure: true
     expires: new Date(Date.now() + 3600000),
     path: '/',
     signed: true,
