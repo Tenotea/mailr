@@ -7,9 +7,9 @@ const messageTemplate = (username:string, verificationLink:string) => {
 
 const sendVerificationMail = async (user:UserInterface, verificationLink:string) => {
   const transporter = createTransport({
-    host: 'smtp.pepipost.com',
-    port: 587,
-    secure: false,
+    host: 'smtp.zoho.com',
+    port: 465,
+    secure: true,
     auth: {
       user: process.env.SMTP_USERNAME,
       pass: process.env.SMTP_PASSWORD
