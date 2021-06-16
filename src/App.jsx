@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
 export const _globAxios = axios.create({
-  baseURL: 'https://mair-proto.herokuapp.com/',
+  baseURL: 'https://mailr-proto.herokuapp.com/',
   withCredentials: true
 })
 export const CurrentUserContext = React.createContext({})
