@@ -39,7 +39,7 @@ const passwordMatches = (fromUser:string, fromDb:string):boolean => {
 const verificationLinkGenerate = (userid:string):MailTokenInterface => {
   const token = crypto.randomBytes(20).toString('hex')
   return {
-    link: `${process.env.CLIENT_APP_URL/verify/${userid}/${token}`,
+    link: `${process.env.CLIENT_APP_URL}/verify/${userid}/${token}`,
     token
   }
 }
