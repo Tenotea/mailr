@@ -8,7 +8,7 @@ const createCookie = (res:Response, payload:string) => {
   res.cookie('user', payload, {
     httpOnly: true,
     sameSite: "none",
-    secure: true
+    secure: true,
     expires: new Date(Date.now() + 3600000),
     path: '/',
     signed: true,
