@@ -11,6 +11,7 @@ import ActivationLink from './routes/ActivationLink'
 
 export const routes = (app:Application):void => {
   app.use(cors({
+    origin: true,
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     optionsSuccessStatus: 200,
