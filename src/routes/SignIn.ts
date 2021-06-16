@@ -7,7 +7,7 @@ import { createCookie, createToken, passwordMatches } from '../controllers/userC
 import { responseUserSkeleton } from '../controllers/skeletons'
 
 const SignIn = Router()
-const clientRedirectURL = 'http://localhost:3000'
+const clientRedirectURL = process.env.CLIENT_APP_URL
 const jsonParser = json({strict: true})
 
 SignIn.post('/', verifyUser, jsonParser, (req, res) => {
