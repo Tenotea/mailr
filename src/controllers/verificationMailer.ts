@@ -17,7 +17,7 @@ const sendVerificationMail = async (user:UserInterface, verificationLink:string)
   })
 
   const message = await transporter.sendMail({
-    from: 'MailR <info@pepisandbox.com>',
+    from: 'MailR <colonel@techcolon.net>',
     to: user.email,
     subject: `Hey ${user.username}, Confirm your regisration with MailR`,
     html: messageTemplate(user.username, verificationLink)
