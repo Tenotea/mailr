@@ -13,7 +13,6 @@ export const routes = (app:Application):void => {
   app.use(cors({
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-    origin: 'http://localhost:3000',
     optionsSuccessStatus: 200,
     methods: ['GET', 'POST']
   }))
