@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react'
-import { CurrentUserContext } from '../App'
+import { CurrentUserContext, _globAxios } from '../App'
 import { VerificationStatusIconSuccess, VerificationStatusIconFailed } from './Verify'
 import Loader from '../components/Loader'
 import { Link, Redirect, Switch, Route, useRouteMatch } from 'react-router-dom'
-import axios from 'axios'
 
 function ActivationBody({type, children}){
   return (
@@ -47,9 +46,7 @@ function ResendActivationLink(){
   function fetchActivationLink(){
     setActivationLink(null)
     setFetchError(null)
-    axios.get(`http://localhost:8000/activation-link/`, {
-      withCredentials: true
-    }).then( body => {
+    _globAxios.get(`/activation-link/`).then( body => {
       body.data.type === 'success' ? setActivationLink(body.data.content) : setFetchError(body.data.msg)
     }, activationLinkError => {
       setFetchError('Could not establish connection. Server may be down or check your internet connection and try again')
