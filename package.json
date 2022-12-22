@@ -45,7 +45,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^17.2.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.10.2",
     "nodemailer": "^6.4.11",
     "passport": "^0.4.1",
